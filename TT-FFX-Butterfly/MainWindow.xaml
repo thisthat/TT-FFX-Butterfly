@@ -1,0 +1,12 @@
+﻿<Window x:Class="TT_FFX_Butterfly.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="393" Width="335" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Image x:Name="img" HorizontalAlignment="Left" Height="310" Margin="0,-1,0,0" VerticalAlignment="Top" Width="325" Source="img/Macalania_Woods_Central2.png" MouseDown="img_MouseDown"/>
+        <Button x:Name="btnLoadFile" Content="Load" HorizontalAlignment="Left" Height="25" Margin="10,323,0,0" VerticalAlignment="Top" Width="71" Click="btnLoadFile_Click"/>
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Height="25" Margin="118,323,0,0" VerticalAlignment="Top" Width="71"/>
+        <Button x:Name="btnSaveFile" Content="Save" HorizontalAlignment="Left" Height="25" Margin="237,323,0,0" VerticalAlignment="Top" Width="71"/>
+        <Canvas x:Name="tela" HorizontalAlignment="Left" Height="309" VerticalAlignment="Top" Width="325"/>
+    </Grid>
+</Window>
