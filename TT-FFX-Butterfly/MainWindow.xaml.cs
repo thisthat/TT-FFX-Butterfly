@@ -23,7 +23,7 @@ namespace TT_FFX_Butterfly
     public partial class MainWindow : Window
     {
 
-        const double dimRect = 5f;
+        const double dimRect = 4f;
         Vector lastPosition;
         Vector preDrawPosition;
         DirectionPoint.ARROW preDrawArrow = DirectionPoint.ARROW.NOPE;
@@ -142,12 +142,7 @@ namespace TT_FFX_Butterfly
             Canvas.SetLeft(rectangle, pos.X);
             Canvas.SetTop(rectangle, pos.Y);
         }
-        private void draw(Vector pos,Rectangle rectangle)
-        {
-            tela.Children.Add(rectangle);
-            Canvas.SetLeft(rectangle, pos.X);
-            Canvas.SetTop(rectangle, pos.Y);
-        }
+       
         private Rectangle preDraw(Vector pos, Rectangle r)
         {
             tela.Children.Remove(r);
@@ -156,6 +151,7 @@ namespace TT_FFX_Butterfly
             rectangle.Height = dimRect;
             rectangle.Fill = new SolidColorBrush(System.Windows.Media.Colors.Black);
             rectangle.Stroke = new SolidColorBrush(System.Windows.Media.Colors.White);
+            rectangle.StrokeThickness = 0.05f;
             tela.Children.Add(rectangle);
             Canvas.SetLeft(rectangle, pos.X);
             Canvas.SetTop(rectangle, pos.Y);
@@ -182,29 +178,62 @@ namespace TT_FFX_Butterfly
                 Vector pos = (Vector)(e.GetPosition(this));
                 double alpha = angleVector(lastPosition, pos);
                 double _x = 0, _y = 0;
-                if (alpha > 0 && alpha < 0.78f)
+                const double pi_8 = 0.39269f;
+                const double pi_3_8 = 1.17809f;
+                const double pi_5_8 = 1.96349f;
+                const double pi_7_8 = 2.74889f;
+                //Look the image for reference
+                if (alpha >= 0 && alpha < pi_8)
                 {
                     _x = dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.RIGHT;
                 }
-                if (alpha > 0.78f && alpha < 2.53f)
+                if (alpha >= pi_8 && alpha < pi_3_8)
+                {
+                    _x = _y = dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.RIGHT | DirectionPoint.ARROW.DOWN;
+                }
+                if (alpha >= pi_3_8 && alpha < pi_5_8)
                 {
                     _y = dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.DOWN;
                 }
-                if (alpha > 2.53f)
+                if (alpha >= pi_5_8 && alpha < pi_7_8)
+                {
+                    _y = dimRect;
+                    _x -= dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.LEFT | DirectionPoint.ARROW.DOWN;
+                }
+                if (alpha >= pi_7_8)
                 {
                     _x -= dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.LEFT;
                 }
-                if (alpha < 0f && alpha > -0.78f)
+                if (alpha < 0 && alpha > -pi_8)
                 {
                     _x = dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.RIGHT;
                 }
-                if (alpha < -0.78f && alpha > -2.53f)
+                if (alpha <= -pi_8 && alpha > -pi_3_8)
                 {
                     _y -= dimRect;
+                    _x = dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.RIGHT| DirectionPoint.ARROW.UP;
                 }
-                if (alpha < -2.53f)
+                if (alpha <= -pi_3_8 && alpha > -pi_5_8)
+                {
+                    _y -= dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.UP;
+                }
+                if (alpha <= -pi_5_8 && alpha >- pi_7_8)
+                {
+                    _x = _y -= dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.LEFT | DirectionPoint.ARROW.UP;
+                }
+                if (alpha <= -pi_7_8)
                 {
                     _x -= dimRect;
+                    preDrawArrow = DirectionPoint.ARROW.LEFT;
                 }
                 preDrawPosition = new Vector(lastPosition.X + _x, lastPosition.Y + _y);
                 lastRectangle = preDraw(preDrawPosition, lastRectangle);
@@ -219,7 +248,18 @@ namespace TT_FFX_Butterfly
 
         private void btnSaveFile_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(points.Count + "");
+            OpenFileDialog d = new OpenFileDialog();
+            d.CheckFileExists = true;
+            d.DefaultExt = "*.xml";
+            d.Filter = "XML documents (.xml)|*.xml";
+            var result = d.ShowDialog();
+            if (result == true)
+            {
+                path_open = d.FileName;
+                XMLManager xml = new XMLManager(path_open);
+                xml.Writer(points);
+            }
+            
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TT_FFX_Butterfly.classes
 {
     class XMLManager
     {
-        public string Path { set; get;}
+        public string Path { set; get; }
 
         public XMLManager() { this.Path = null; }
         public XMLManager(string path) { this.Path = path; }
@@ -39,7 +39,8 @@ namespace TT_FFX_Butterfly.classes
                 while (reader.Read())
                 {
                     if (reader.NodeType == XmlNodeType.EndElement) { continue; }
-                    if(reader.LocalName == "position"){
+                    if (reader.LocalName == "position")
+                    {
                         XElement el = XNode.ReadFrom(reader) as XElement;
                         double x, y;
                         var tmp = el.Value.Split(';');
@@ -48,7 +49,7 @@ namespace TT_FFX_Butterfly.classes
                         point = new DirectionPoint();
                         point.isButteFly = false;
                         point.point = DirectionPoint.ARROW.NOPE;
-                        point.position = new Vector(x,y);
+                        point.position = new Vector(x, y);
                         list.Add(point);
                     }
 
@@ -67,10 +68,42 @@ namespace TT_FFX_Butterfly.classes
                         point.point = getArrow(el.Value);
                         list.Add(point);
                     }
-                    
+
                 }
             }
             return list;
+        }
+
+        public void Writer(List<DirectionPoint> listPoints, string path)
+        {
+            this.Path = path;
+            Writer(listPoints);
+        }
+        public void Writer(List<DirectionPoint> listPoints)
+        {
+            Vector o = new Vector(0,0);
+            string _attr = "";
+            string outXML = "<?xml version='1.0' encoding='utf-8'?>\n<points>\n";
+            foreach (var point in listPoints)
+            {
+                _attr = "";
+                if (point.position.Equals(o))
+                {
+                    if(point.isButteFly){
+                        _attr = " isButterfly='true'";
+                    }
+                    outXML += "\t<point" + _attr  + ">" + Convert.ToInt32(point.point) + "</point>\n";
+                }
+                else
+                {
+                    outXML += "\t<position>" + point.position.X + ";" + point.position.Y + "</position>\n";
+                }
+            }
+            outXML += "</points>";
+            if (this.Path != null)
+            {
+                System.IO.File.WriteAllText(this.Path, outXML);
+            }
         }
 
         private DirectionPoint.ARROW getArrow(string p)

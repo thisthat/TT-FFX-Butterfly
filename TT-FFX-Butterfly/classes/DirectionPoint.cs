@@ -27,5 +27,10 @@ namespace TT_FFX_Butterfly
         public bool isButteFly { get; set; }
         public ARROW point { get; set; }
         public Vector position { get; set; }
+
+        public override string ToString()
+        {
+            return "{" + position.X + ";" + position.Y + "} - " + point + " - " + isButteFly;
+        }
     }
 }
