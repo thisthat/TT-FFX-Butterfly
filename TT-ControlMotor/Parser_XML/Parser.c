@@ -83,8 +83,10 @@ int flag = 0;
 struct listPoint *headList;
 struct listPoint *tailList;
 struct point *lastPoint;
+int n_point = 0;
 
-#line 88 "Parser.c" /* yacc.c:339  */
+
+#line 90 "Parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -147,7 +149,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 151 "Parser.c" /* yacc.c:358  */
+#line 153 "Parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -445,8 +447,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    38,    39,    41,    43,    44,    46,    48,
-      49
+       0,    38,    38,    40,    41,    43,    45,    46,    48,    50,
+      51
 };
 #endif
 
@@ -1236,61 +1238,61 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 36 "Parser.y" /* yacc.c:1661  */
+#line 38 "Parser.y" /* yacc.c:1661  */
     { }
-#line 1242 "Parser.c" /* yacc.c:1661  */
+#line 1244 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 3:
-#line 38 "Parser.y" /* yacc.c:1661  */
+#line 40 "Parser.y" /* yacc.c:1661  */
     {}
-#line 1248 "Parser.c" /* yacc.c:1661  */
+#line 1250 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 4:
-#line 39 "Parser.y" /* yacc.c:1661  */
+#line 41 "Parser.y" /* yacc.c:1661  */
     {}
-#line 1254 "Parser.c" /* yacc.c:1661  */
+#line 1256 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 5:
-#line 41 "Parser.y" /* yacc.c:1661  */
+#line 43 "Parser.y" /* yacc.c:1661  */
     { }
-#line 1260 "Parser.c" /* yacc.c:1661  */
+#line 1262 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 43 "Parser.y" /* yacc.c:1661  */
+#line 45 "Parser.y" /* yacc.c:1661  */
     { }
-#line 1266 "Parser.c" /* yacc.c:1661  */
+#line 1268 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 44 "Parser.y" /* yacc.c:1661  */
+#line 46 "Parser.y" /* yacc.c:1661  */
     { }
-#line 1272 "Parser.c" /* yacc.c:1661  */
+#line 1274 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 8:
-#line 46 "Parser.y" /* yacc.c:1661  */
+#line 48 "Parser.y" /* yacc.c:1661  */
     { generateNodePoint((yyvsp[-6]),(yyvsp[-4]));  }
-#line 1278 "Parser.c" /* yacc.c:1661  */
+#line 1280 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 9:
-#line 48 "Parser.y" /* yacc.c:1661  */
+#line 50 "Parser.y" /* yacc.c:1661  */
     {flag = 0;}
-#line 1284 "Parser.c" /* yacc.c:1661  */
+#line 1286 "Parser.c" /* yacc.c:1661  */
     break;
 
   case 10:
-#line 49 "Parser.y" /* yacc.c:1661  */
+#line 51 "Parser.y" /* yacc.c:1661  */
     { flag = 1;}
-#line 1290 "Parser.c" /* yacc.c:1661  */
+#line 1292 "Parser.c" /* yacc.c:1661  */
     break;
 
 
-#line 1294 "Parser.c" /* yacc.c:1661  */
+#line 1296 "Parser.c" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1518,7 +1520,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 52 "Parser.y" /* yacc.c:1906  */
+#line 54 "Parser.y" /* yacc.c:1906  */
 
 
 //int main () {
@@ -1548,6 +1550,7 @@ void generateNodePoint(char* const xml_node,char* const xml_value){
 	if(strcmp(xml_node,"point") != 0){
 		return;
 	}
+	n_point++;
 	if(headList != NULL){
 		//There is at least an element
 		lastPoint = malloc(sizeof (struct point));

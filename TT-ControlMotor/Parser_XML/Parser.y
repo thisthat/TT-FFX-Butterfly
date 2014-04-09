@@ -18,6 +18,8 @@ int flag = 0;
 struct listPoint *headList;
 struct listPoint *tailList;
 struct point *lastPoint;
+int n_point = 0;
+
 %}
 
 %start xml
@@ -78,6 +80,7 @@ void generateNodePoint(char* const xml_node,char* const xml_value){
 	if(strcmp(xml_node,"point") != 0){
 		return;
 	}
+	n_point++;
 	if(headList != NULL){
 		//There is at least an element
 		lastPoint = malloc(sizeof (struct point));

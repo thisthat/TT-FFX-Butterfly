@@ -1,8 +1,6 @@
 CC = gcc
 CCFLAGS = -g -O3 -c
-
 FLEX = flex
-
 BISON = bison
 
 all: compile clean
