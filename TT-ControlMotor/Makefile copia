@@ -1,0 +1,22 @@
+CC = g++
+CCFLAGS = -g -O3 -c
+PARSER_DIR = ./Parser_XML/
+FLAG_C11 = -std=c++11 -stdlib=libc++
+all: compile clean
+
+
+parser:  
+	make -C $(PARSER_DIR)
+
+Automata.o: Automata.cpp
+	$(CC) $(FLAG_C11) -c Automata.cpp
+NodeHandler.o: NodeHandler.cpp
+	$(CC) $(FLAG_C11) -c NodeHandler.cpp
+
+compile: parser Automata.o NodeHandler.o
+	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Main.cpp Automata.o NodeHandler.o -o Test $(FLAG_C11) -v
+
+clean:
+	
+demo: compile
+	./Test < Parser_XML/input_text.xml 

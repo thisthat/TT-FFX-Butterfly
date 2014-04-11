@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version='1.0' encoding='utf-8'?>
 <points>
 	<position>63;57</position>
@@ -62,4 +63,12 @@
 	<point>8</point>
 	<point>8</point>
 	<point>8</point>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<points>
+  <position>100;100</position>
+  <point>8</point>
+  <point>8</point>
+  <point isButterfly="true">10</point>
+>>>>>>> origin/Automaton_Definition
 </points>
