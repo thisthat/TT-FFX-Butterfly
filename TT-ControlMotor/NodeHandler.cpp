@@ -30,6 +30,7 @@ void NodeHandler::printList(){
 void NodeHandler::start(){
 	listPoint *h = head;
 	std::vector<int> out;
+	//Waiting between two steps
 	std::chrono::time_point<std::chrono::system_clock> now;
 	std::chrono::time_point<std::chrono::system_clock> now2;
 	int t;
@@ -58,7 +59,7 @@ void NodeHandler::start(){
     	
     }
 }
-
+//Make the steps
 void NodeHandler::handleMotor(std::vector<int> out){
 	int stepDC, stepStepper;
 	stepDC = abs(out[DC]);

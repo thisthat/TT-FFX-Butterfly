@@ -3,6 +3,10 @@
 int main()
 {
 
+Log *logger = new LogTcp("192.168.0.255");
+logger->open();
+logger->write("asd");
+logger->write("ok");
     std::cout << "Starting the Parser.." << std::endl;
     yyin = fopen("./Parser_XML/input_text.xml","r");
     yyparse();
@@ -20,13 +24,19 @@ int main()
     
 
     NodeHandler *nh = new NodeHandler(headList); 
+
+    
+    
+
     std::cout << "_________________" << std::endl;
     nh->start();
 
     std::cout << "_________________\nEND_PROCCESS" << std::endl;
     delete nh;
-    //Deallocate memory used with the chain
+    //Deallocate memory used by the chain
     deallocate();
+    logger->write("Fine");
+    logger->close();
     return EXIT_SUCCESS;
 }
 

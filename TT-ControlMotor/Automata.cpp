@@ -31,6 +31,7 @@ std::vector<int> Automata::calcDistance(STATE s1, STATE s2){
             });
 }
 
+//Initializating the value of the motor
 void Automata::initAutomata(){
     if(DEBUG){
         std::cout << "\tDebug: Initializating automata...\n";
@@ -51,6 +52,7 @@ void Automata::initAutomata(){
     }
 }
 
+//Debug purpose
 void Automata::seeMap(){
     std::cout << "\tMap\n";
     std::cout << "\t\tValue " << NOPE       << " : " << distance[NOPE][DC]          << ";" << distance[NOPE][STEPPER]       << std::endl;
@@ -63,6 +65,7 @@ void Automata::seeMap(){
     std::cout << "\t\tValue " << DOWN_LEFT  << " : " << distance[DOWN_LEFT][DC]     << ";" << distance[DOWN_LEFT][STEPPER]  << std::endl;
     std::cout << "\t\tValue " << DOWN_RIGHT << " : " << distance[DOWN_RIGHT][DC]    << ";" << distance[DOWN_RIGHT][STEPPER] << std::endl;
 }
+//Better see a string instead of a number :p
 std::string Automata::convertArrow(int a){
     if(! (a ^ UP)){
         return "UP";

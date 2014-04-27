@@ -5,6 +5,8 @@
 #include <vector>
 #include "./Parser_XML/Point.h"
 #include "NodeHandler.cpp"
+#include "./Logger/logFile.hpp"
+#include "./Logger/logTcp.hpp"
 
 #ifdef __cplusplus
 extern "C"

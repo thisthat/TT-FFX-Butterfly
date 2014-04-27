@@ -10,6 +10,7 @@
 #define DC 		0
 #define STEPPER 1
 
+//Enum of states
 enum STATE { 
 	NOPE 		= 0, 
 	UP 	 		= 1, 

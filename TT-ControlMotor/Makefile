@@ -13,6 +13,11 @@ Automata.o: Automata.cpp Automata.hpp
 NodeHandler.o: NodeHandler.cpp NodeHandler.hpp
 	$(CC) $(FLAG_C11) -c NodeHandler.cpp
 
+logFile.o: ./Logger/logFile.cpp ./Logger/logFile.hpp ./Logger/log.hpp
+	$(CC) $(FLAG_C11) -c $<
+logTcp.o: ./Logger/logTcp.cpp ./Logger/logTcp.hpp ./Logger/log.hpp
+	$(CC) $(FLAG_C11) -c $<
+
 MotorDC.o: ./Motor/MotorDC.cpp ./Motor/MotorDC.hpp 
 	$(CC) $(FLAG_C11) -c $<
 MotorStepper.o: ./Motor/MotorStepper.cpp ./Motor/MotorStepper.hpp
@@ -23,8 +28,10 @@ Main.o: Main.cpp Main.hpp NodeHandler.hpp NodeHandler.cpp
 
 Motor: MotorDC.o MotorStepper.o
 
-compile: parser Automata.o Motor Main.o
-	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o Main.o -o Test $(FLAG_C11)
+Log: logFile.o logTcp.o 
+
+compile: parser Automata.o Motor Log Main.o
+	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logTcp.o Main.o -o Test $(FLAG_C11)
 
 clean:
 	

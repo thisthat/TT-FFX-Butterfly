@@ -5,7 +5,7 @@
 class NodeHandler {
 	public:
 		NodeHandler(struct listPoint *h);
-		void printList();
+		void printList(); //Debug Purpose
 		void start();
 
 	private:
