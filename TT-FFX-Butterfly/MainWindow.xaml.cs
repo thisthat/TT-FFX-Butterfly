@@ -36,6 +36,9 @@ namespace TT_FFX_Butterfly
         public MainWindow()
         {
             InitializeComponent();
+            System.Threading.Thread.Sleep(1000);
+            Log logWnd = new Log();
+            logWnd.Show();
         }
 
         private void btnLoadFile_Click(object sender, RoutedEventArgs e)
@@ -168,11 +171,15 @@ namespace TT_FFX_Butterfly
             else
             {
                 btnStart.Content = "Start";
+                tela.Children.Remove(lastRectangle);
             }
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            if(tela.Children.Count == 0){
+                return;
+            }
             if (activeDraw)
             {
                 Vector pos = (Vector)(e.GetPosition(this));
