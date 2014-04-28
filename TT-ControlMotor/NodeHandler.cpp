@@ -9,20 +9,24 @@
 
 #define TIMER 1000 //MS before read next node
 
-NodeHandler::NodeHandler(struct listPoint *h){
+NodeHandler::NodeHandler(struct listPoint *h, Log *l){
 	head = h;
+	logger = l;
 	std::cout << "Node Handler Started..\n";
 	if(DEBUG){
-		std::cout << "\tDebug: see xml list" << std::endl;;
+		logger->write("\tDebug: see xml list");
 		printList();
 	}
+	atmt = new Automata(l);
 }
 
 void NodeHandler::printList(){
 	listPoint *h = head;
+	char buffer[300];
     int i = 0;
     while(h != NULL){
-	    fprintf(stderr, "\telement %d - line:%d\n\t\tisButterfly: %d\n\t\tvalue: %d\n",++i,h->point->position.line,h->point->butterfly,h->point->arrow);
+	    sprintf(buffer, "\telement %d - line:%d\n\t\tisButterfly: %d\n\t\tvalue: %d\n",++i,h->point->position.line,h->point->butterfly,h->point->arrow);
+	    logger->write(buffer);
 	    h = h->next;
     }
 }
@@ -34,26 +38,27 @@ void NodeHandler::start(){
 	std::chrono::time_point<std::chrono::system_clock> now;
 	std::chrono::time_point<std::chrono::system_clock> now2;
 	int t;
+	char buffer[300]; //Debug string
 	while(h != NULL){
 		if(DEBUG){
-			std::cout << "\tPoint @" << h->point->position.line;
+			sprintf(buffer,"\tPoint @Line:%d",h->point->position.line);
 			if(h->point->butterfly){
-				std::cout << " -- BUTTERFLY FOUND";
+				sprintf(buffer,"%s %s", buffer, "-- BUTTERFLY FOUND");
 			}
-			std::cout << std::endl;
+			logger->write(buffer);
 		}
-		out = atmt.transition((STATE)h->point->arrow);
+		out = atmt->transition((STATE)h->point->arrow);
 		if(DEBUG){
-			std::cout << "\t\tStep DC: " << out[0] << "\n\t\tStep Stepper: " << out[1] << std::endl;
+			sprintf(buffer, "\t\tStep DC: %d\n\t\tStep Stepper: %d", out[0], out[1]);
 		}
 		//Sync between motor and wait
 		now = std::chrono::system_clock::now();
 		handleMotor(out);
 		now2 = std::chrono::system_clock::now();
 		t = TIMER - std::chrono::duration_cast<std::chrono::milliseconds>(now2 - now).count();
-		if(DEBUG){
+		/*if(DEBUG){
 			std::cout << "\t\tWait " << t << " ms" << std::endl;
-		}
+		}*/
 		h = h->next;
     	std::this_thread::sleep_for(std::chrono::milliseconds(t));
     	

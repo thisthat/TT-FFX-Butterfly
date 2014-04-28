@@ -14,4 +14,6 @@ void LogFile::close(){
 }
 void LogFile::write(string msg){
 	log << formatMessage(msg);
+	log << "\n";
+	fprintf(stderr, "Message: %s\n", msg.c_str());
 }

@@ -2,11 +2,12 @@
 #include <iostream> // per std::cout, std::cin e std::endl
 #include <utility> //Pair 
 #include <map>  //e map
+#include <sys/stat.h> //File stat
 #include <vector>
 #include "./Parser_XML/Point.h"
 #include "NodeHandler.cpp"
 #include "./Logger/logFile.hpp"
-#include "./Logger/logTcp.hpp"
+#include "./Logger/logUDP.hpp"
 
 #ifdef __cplusplus
 extern "C"

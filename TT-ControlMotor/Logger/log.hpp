@@ -16,9 +16,9 @@ class Log
    		time_t now = time(0);
    		tm *ltm = localtime(&now);
    		timeval curTime;
-		gettimeofday(&curTime, NULL);
-		int milli = curTime.tv_usec / 1000;
-   		sprintf(buffer,"%d/%d/%d %d:%d:%d:%d\t :: %s\n",ltm->tm_mday,1 + ltm->tm_mon,1900 + ltm->tm_year,1 + ltm->tm_hour,1 + ltm->tm_min,1 + ltm->tm_sec, milli, message.c_str());
+		  gettimeofday(&curTime, NULL);
+		  int milli = curTime.tv_usec / 1000;
+   		sprintf(buffer,"%d/%d/%d %d:%d:%d:%d\t :: %s",ltm->tm_mday,1 + ltm->tm_mon,1900 + ltm->tm_year,1 + ltm->tm_hour,1 + ltm->tm_min,1 + ltm->tm_sec, milli, message.c_str());
    		std::string r = buffer;
    		return r;
    	}

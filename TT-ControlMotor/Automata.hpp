@@ -4,6 +4,11 @@
 #include <map>  //e map
 #include <vector>
 
+#ifndef   LOG_H
+#define   LOG_H
+#include "./Logger/log.hpp"
+#endif
+
 #define DEBUG 1 //Debuging
 
 //MAPPING MOTOR IN VECTOR
@@ -27,7 +32,7 @@ typedef std::map<enum STATE, std::vector<int> > Map;
 class Automata {
 
 	public:
-        Automata();
+        Automata(Log *l);
         ~Automata();
  		std::vector<int> transition(STATE s);
  		void seeMap();
@@ -35,6 +40,7 @@ class Automata {
     private:
     	Map distance;
     	STATE state;
+    	Log *logger;
     	void initAutomata();
     	std::vector<int> calcDistance(STATE s1, STATE s2);
     	std::vector<int> createValue(int[]);

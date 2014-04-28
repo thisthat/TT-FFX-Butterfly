@@ -1,14 +1,14 @@
-#include "logTcp.hpp"
-using namespace std;
+#include "logUDP.hpp"
 
-#define BROADCAST_PORT 1515
+#define BROADCAST_PORT 15150
 
-LogTcp::LogTcp(string name){
-	_addr = name;
-	cout << "Log Address: " << _addr << endl;
+LogUDP::LogUDP(string addr,int port){
+	_addr = addr;
+	_port = port;
+	cout << "Log Address: " << addr << ":" << port << endl;
 }
 
-void LogTcp::open(){
+void LogUDP::open(){
 	//Open the socket
 	_sock = socket(AF_INET, SOCK_DGRAM, 0);
 	if (_sock < 0)
@@ -26,18 +26,19 @@ void LogTcp::open(){
 	}
 	//Bind structure to broadcast ip	
 	Sender_addr.sin_family = AF_INET;
-	Sender_addr.sin_port = htons(BROADCAST_PORT);
+	Sender_addr.sin_port = htons(_port);
 	struct hostent *hostPointer;
 	hostPointer=gethostbyname(_addr.c_str());
     memcpy((unsigned char * ) &Sender_addr.sin_addr, (unsigned char *) hostPointer -> h_addr, hostPointer -> h_length);
    
 }
-void LogTcp::close(){
+void LogUDP::close(){
   	 shutdown(_sock,2);
 }
-void LogTcp::write(string msg){
+void LogUDP::write(string msg){
 	msg = formatMessage(msg);
 	int message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
+	fprintf(stderr, "Message: %s\n", msg.c_str());
    	if (message == -1){
     	perror("Sending message failed");
    	}

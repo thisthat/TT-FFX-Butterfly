@@ -10,15 +10,16 @@
 
 using namespace std;
 
-class LogTcp : public Log
+class LogUDP : public Log
 {
 public:
-	LogTcp(string addr);
+	LogUDP(string addr,int port);
 	virtual void open();
 	virtual void write(string msg);
 	virtual void close();
 private:
 	string _addr;
+	int _port;
 	int _sock;
 	struct sockaddr_in Sender_addr;
 };
