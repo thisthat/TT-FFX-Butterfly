@@ -88,13 +88,7 @@ namespace TT_FFX_Butterfly
             }
         }
 
-        private void lstLog_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            LogMessage m = new LogMessage();
-            m.Message = "asdasd";
-            m.Time = "dsa";
-            list.Add(m);
-        }
+       
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -102,6 +96,10 @@ namespace TT_FFX_Butterfly
             {
              
                 SaveFile();
+            }
+            else if (e.Key == Key.Delete)
+            {
+                list.Clear();
             }
         }
 
@@ -130,11 +128,7 @@ namespace TT_FFX_Butterfly
 
         private void lstLog_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-               
-                SaveFile();
-            }
+            Window_KeyDown(sender, e);
         }
 
 

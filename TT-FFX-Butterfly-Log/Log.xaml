@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Log" Height="420" Width="685" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" >
     <Grid>
-        <ListView x:Name="lstLog" HorizontalAlignment="Left" Height="379" VerticalAlignment="Top" Width="669" ItemsSource="{Binding list}" MouseDoubleClick="lstLog_MouseDoubleClick" KeyDown="lstLog_KeyDown">
+        <ListView x:Name="lstLog" HorizontalAlignment="Left" Height="379" VerticalAlignment="Top" Width="669" ItemsSource="{Binding list}"  KeyDown="lstLog_KeyDown">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Time" Width="130" DisplayMemberBinding="{Binding Time}" />
