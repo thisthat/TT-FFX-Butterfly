@@ -9,6 +9,9 @@ all: compile clean
 parser:  
 	make -C $(PARSER_DIR)
 
+List.o: List.cpp List.hpp
+	$(CC) $(FLAG_C11) -c $<
+
 Automata.o: Automata.cpp Automata.hpp
 	$(CC) $(FLAG_C11) -c Automata.cpp
 NodeHandler.o: NodeHandler.cpp NodeHandler.hpp
@@ -31,8 +34,8 @@ Motor: MotorDC.o MotorStepper.o
 
 Log: logFile.o logUDP.o 
 
-compile: parser Automata.o Motor Log Main.o
-	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logUDP.o Main.o -o $(NAME) $(FLAG_C11)
+compile: parser Automata.o Motor Log Main.o List.o
+	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logUDP.o List.o Main.o -o $(NAME) $(FLAG_C11)
 
 clean:
 	

@@ -1,11 +1,14 @@
 #include "logUDP.hpp"
 
-#define BROADCAST_PORT 15150
+#define TIMER 300
+
+#define DEBUG 1
 
 LogUDP::LogUDP(string addr,int port){
 	_addr = addr;
 	_port = port;
 	cout << "Log Address: " << addr << ":" << port << endl;
+	queue = new List();
 }
 
 void LogUDP::open(){
@@ -30,16 +33,50 @@ void LogUDP::open(){
 	struct hostent *hostPointer;
 	hostPointer=gethostbyname(_addr.c_str());
     memcpy((unsigned char * ) &Sender_addr.sin_addr, (unsigned char *) hostPointer -> h_addr, hostPointer -> h_length);
-   
+    running = true;
+    fThread = std::thread(&LogUDP::send_thread, this);
 }
+
+void LogUDP::send_thread(){
+	int message;
+	string msg;
+	std::chrono::milliseconds dura( TIMER );
+	while(running){
+		std::this_thread::sleep_for(dura);
+		//Enter critical section
+		fMutex.lock();
+		//Get message
+		if(!queue->isEmpty()){
+			msg = queue->take();
+			fprintf(stderr, "\033[255;0;31mMessage: %s\033[0m\n\n", msg.c_str());
+			message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
+			if (message == -1){
+	    		perror("Sending message failed");
+	   		}
+		}
+	    fMutex.unlock();
+	}
+	while(!queue->isEmpty()){
+		msg = queue->take();
+		fprintf(stderr, "\033[255;0;31mMessage: %s\033[0m\n\n", msg.c_str());
+		message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
+		if (message == -1){
+    		perror("Sending message failed");
+   		}
+   		std::this_thread::sleep_for(dura);
+	}
+	//std::terminate();
+}
+
 void LogUDP::close(){
-  	 shutdown(_sock,2);
+	running = false;
+	fprintf(stderr, "\033[1;;32mSending last messages....\033[0m\n\n");
+	fThread.join();
+  	shutdown(_sock,2);
 }
 void LogUDP::write(string msg){
 	msg = formatMessage(msg);
-	int message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
-	fprintf(stderr, "Message: %s\n", msg.c_str());
-   	if (message == -1){
-    	perror("Sending message failed");
-   	}
+	fMutex.lock();
+	queue->add(msg);
+	fMutex.unlock();
 }

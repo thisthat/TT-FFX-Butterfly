@@ -110,7 +110,6 @@ int main(int argc, char** argv)
     delete nh;
     //Deallocate memory used by the chain
     deallocate();
-
     //Close the logger
     logger->close();
     return EXIT_SUCCESS;
