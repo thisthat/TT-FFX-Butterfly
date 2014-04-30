@@ -36,11 +36,13 @@ namespace TT_FFX_Butterfly
             private string _Message;
         }
         ObservableCollection<LogMessage> list = new ObservableCollection<LogMessage>();
+        private Thread t;
         public Log()
         {
             InitializeComponent();
             lstLog.ItemsSource = list;
-            Thread t = new Thread(StartListening);
+            System.Threading.Thread.Sleep(1000);
+            t = new Thread(StartListening);
             t.IsBackground = true;
             t.Start();
         }
@@ -48,7 +50,22 @@ namespace TT_FFX_Butterfly
         private readonly UdpClient udp = new UdpClient(15150);
         private void StartListening()
         {
+            
             IPEndPoint ip = new IPEndPoint(IPAddress.Any, 15150);
+            //handleHost(ip);
+            Thread t = new Thread(new ParameterizedThreadStart(handleHost));
+            t.IsBackground = true;
+            t.Start(ip);
+        }
+
+        private void handleHost(object obj)
+        {
+            IPEndPoint ip = (IPEndPoint) obj;
+            handleHost(ip);
+        }
+
+        private void handleHost(IPEndPoint ip)
+        {
             LogMessage msg;
             while (true)
             {
@@ -69,7 +86,6 @@ namespace TT_FFX_Butterfly
                 }));
 
             }
-
         }
 
         private void lstLog_MouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -37,8 +37,8 @@ namespace TT_FFX_Butterfly
         {
             InitializeComponent();
             System.Threading.Thread.Sleep(1000);
-            Log logWnd = new Log();
-            logWnd.Show();
+            //Log logWnd = new Log();
+            //logWnd.Show();
         }
 
         private void btnLoadFile_Click(object sender, RoutedEventArgs e)
