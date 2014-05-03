@@ -32,7 +32,9 @@ void LogUDP::open(){
 	Sender_addr.sin_port = htons(_port);
 	struct hostent *hostPointer;
 	hostPointer=gethostbyname(_addr.c_str());
-    memcpy((unsigned char * ) &Sender_addr.sin_addr, (unsigned char *) hostPointer -> h_addr, hostPointer -> h_length);
+	Sender_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	Sender_addr.sin_addr = *(struct in_addr *) hostPointer->h_addr;
+    //memcpy((unsigned char * ) &Sender_addr.sin_addr, (unsigned char *) hostPointer -> h_addr, hostPointer -> h_length);
     running = true;
     fThread = std::thread(&LogUDP::send_thread, this);
 }

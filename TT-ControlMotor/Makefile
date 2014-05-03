@@ -1,7 +1,15 @@
-CC = g++
+PROJECT = OSX
+
+ifeq ($(PROJECT), RPI)
+	CC = g++-4.7
+	FLAG_C11 = -std=c++0x
+else
+	FLAG_C11 = -std=c++11 -stdlib=libc++
+	CC = g++
+endif
 CCFLAGS = -g -O3 -c
 PARSER_DIR = ./Parser_XML/
-FLAG_C11 = -std=c++11 -stdlib=libc++
+
 NAME = TT-FFX-Butterfly
 all: compile clean
 
@@ -35,7 +43,7 @@ Motor: MotorDC.o MotorStepper.o
 Log: logFile.o logUDP.o 
 
 compile: parser Automata.o Motor Log Main.o List.o
-	${CC} $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logUDP.o List.o Main.o -o $(NAME) $(FLAG_C11)
+	$(CC) $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logUDP.o List.o Main.o -o $(NAME) $(FLAG_C11)
 
 clean:
 	
