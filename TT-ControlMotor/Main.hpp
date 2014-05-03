@@ -4,6 +4,8 @@
 #include <map>  //e map
 #include <sys/stat.h> //File stat
 #include <vector>
+#include <cstring>
+#include <wiringPi.h>
 #include "./Parser_XML/Point.h"
 #include "NodeHandler.cpp"
 #include "./Logger/logFile.hpp"

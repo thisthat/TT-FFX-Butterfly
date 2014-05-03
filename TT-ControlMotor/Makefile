@@ -2,7 +2,7 @@ PROJECT = OSX
 
 ifeq ($(PROJECT), RPI)
 	CC = g++-4.7
-	FLAG_C11 = -std=c++0x
+	FLAG_C11 = -std=c++11 -pthread -lwiringPi
 else
 	FLAG_C11 = -std=c++11 -stdlib=libc++
 	CC = g++
@@ -30,9 +30,9 @@ logFile.o: ./Logger/logFile.cpp ./Logger/logFile.hpp ./Logger/log.hpp
 logUDP.o: ./Logger/logUDP.cpp ./Logger/logUDP.hpp ./Logger/log.hpp
 	$(CC) $(FLAG_C11) -c $<
 
-MotorDC.o: ./Motor/MotorDC.cpp ./Motor/MotorDC.hpp 
+MotorDC.o: ./Motor/MotorDC.cpp ./Motor/MotorDC.hpp ./Motor/Motor.hpp
 	$(CC) $(FLAG_C11) -c $<
-MotorStepper.o: ./Motor/MotorStepper.cpp ./Motor/MotorStepper.hpp
+MotorStepper.o: ./Motor/MotorStepper.cpp ./Motor/MotorStepper.hpp ./Motor/Motor.hpp
 	$(CC) $(FLAG_C11) -c $<
 
 Main.o: Main.cpp Main.hpp NodeHandler.hpp NodeHandler.cpp
@@ -46,6 +46,6 @@ compile: parser Automata.o Motor Log Main.o List.o
 	$(CC) $(PARSER_DIR)Parser.o $(PARSER_DIR)Lexer.o Automata.o MotorDC.o MotorStepper.o logFile.o logUDP.o List.o Main.o -o $(NAME) $(FLAG_C11)
 
 clean:
-	
+	rm *.o
 demo: compile
-	./$(NAME) $(PARSER_DIR)input_text.xml -lUDP 192.168.0.255 -port 15150
+	sudo ./$(NAME) $(PARSER_DIR)input_text.xml -lUDP 192.168.0.255 -port 15150

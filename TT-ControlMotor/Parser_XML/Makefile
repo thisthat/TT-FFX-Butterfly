@@ -12,8 +12,14 @@ Lexer.c: Lexer.l
 Parser.c: Parser.y
 	${BISON} -v -t --defines=Parser.h -rall $< -o $@
 
+Lexer.o: Lexer.c 
+	${CC} $(CCFLAGS) Lexer.c 
+
+Parser.o:  Parser.c	
+	${CC} $(CCFLAGS) Parser.c 
+
 compile: Lexer.c Parser.c	
-	${CC} $(CCFLAGS) Parser.c Lexer.c 
+	 
 clean:
 	
 

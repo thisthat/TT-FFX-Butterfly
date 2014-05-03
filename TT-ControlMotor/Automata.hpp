@@ -43,6 +43,5 @@ class Automata {
     	Log *logger;
     	void initAutomata();
     	std::vector<int> calcDistance(STATE s1, STATE s2);
-    	std::vector<int> createValue(int[]);
 
 };

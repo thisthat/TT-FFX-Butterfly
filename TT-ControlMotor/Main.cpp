@@ -5,7 +5,8 @@ inline bool existsFile(const std::string& name);
 
 int main(int argc, char** argv)
 {
-
+    //Init Wiring Library
+    wiringPiSetup();
     //Param Declaration and Default
     string input_file;
     string address = "TT-FFX-Butterfly.log";
@@ -97,7 +98,7 @@ int main(int argc, char** argv)
     do {
 
         if(j++ == 0) //just one
-            std::cout << "Press ENTER to start" << std::endl;
+            fprintf(stderr,"%d-Press ENTER to start",j); 
         c = getchar();
     } while(c != '\n'); 
 

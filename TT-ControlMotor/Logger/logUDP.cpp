@@ -50,7 +50,7 @@ void LogUDP::send_thread(){
 		//Get message
 		if(!queue->isEmpty()){
 			msg = queue->take();
-			fprintf(stderr, "\033[255;0;31mMessage: %s\033[0m\n\n", msg.c_str());
+			fprintf(stderr, "\033[255;0;32mMessage: %s\033[0m\n\n", msg.c_str());
 			message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
 			if (message == -1){
 	    		perror("Sending message failed");
@@ -60,7 +60,7 @@ void LogUDP::send_thread(){
 	}
 	while(!queue->isEmpty()){
 		msg = queue->take();
-		fprintf(stderr, "\033[255;0;31mMessage: %s\033[0m\n\n", msg.c_str());
+		fprintf(stderr, "\033[255;0;32mMessage: %s\033[0m\n\n", msg.c_str());
 		message = sendto(_sock, msg.c_str(), msg.size()+1, 0, (struct sockaddr *) &Sender_addr, sizeof(Sender_addr));
 		if (message == -1){
     		perror("Sending message failed");

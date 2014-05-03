@@ -1,4 +1,5 @@
 #include <iostream> // per std::cout, std::cin e std::endl
+#include <wiringPi.h>
 class Motor
 {
   public:
